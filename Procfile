@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -jar build/libs/msaas-server-0.0.1-SNAPSHOT.jar
+web: build/install/msaas-server/bin/msaas-server
