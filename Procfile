@@ -1,0 +1,1 @@
+web: build/install/msaas-server/bin/msaas-server

@@ -28,7 +28,7 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot' 
 
 jar {
-    baseName = 'msaas'
+    baseName = 'msaas-server'
     version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
@@ -48,4 +48,10 @@ dependencies {
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
+}
+
+mainClassName = "msaas.MsaasApplication"
+
+task stage(dependsOn: ['clean', 'build', 'installApp']) {
+        
 }
