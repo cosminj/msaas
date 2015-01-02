@@ -1,7 +1,9 @@
-package msaas.security;
+package com.msaas.security;
 
-import msaas.customer.Customer;
-import msaas.customer.CustomerRepository;
+import com.msaas.customer.Customer;
+import com.msaas.customer.CustomerRepository;
+import com.msaas.observer.Observer;
+import com.msaas.observer.ObserverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,17 +26,17 @@ import static java.util.Arrays.asList;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final CustomerRepository customerRepository;
+    private final ObserverRepository observerRepository;
 
     @Autowired
-    public CustomUserDetailsService(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public CustomUserDetailsService(ObserverRepository observerRepository) {
+        this.observerRepository = observerRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Customer customer = customerRepository.findByName(username);
-        return new User(customer.name, customer.password, getAuthorities(asList("CUSTOMER")));
+        Observer obs = observerRepository.findByName(username);
+        return new User(obs.name, obs.password, getAuthorities(asList("OBSERVER")));
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities(List<String> roles) {

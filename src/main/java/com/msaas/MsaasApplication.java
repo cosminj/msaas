@@ -1,4 +1,4 @@
-package msaas;
+package com.msaas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

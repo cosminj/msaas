@@ -50,6 +50,6 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
 }
 
-mainClassName = "msaas.MsaasApplication"
+mainClassName = "com.msaas.MsaasApplication"
 
 task stage(dependsOn: 'installApp')

@@ -1,9 +1,11 @@
-package msaas.customer;
+package com.msaas.customer;
 
 import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+
+import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
  * @author cj
@@ -14,7 +16,7 @@ import javax.persistence.*;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_id_seq")
+    @GeneratedValue(strategy = SEQUENCE, generator = "customer_id_seq")
     public long id;
 
     @Column(unique = true)

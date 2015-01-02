@@ -1,4 +1,4 @@
-package msaas.customer;
+package com.msaas.customer;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;

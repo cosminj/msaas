@@ -1,4 +1,4 @@
-package msaas;
+package com.msaas;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
