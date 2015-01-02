@@ -1,11 +1,16 @@
 package com.msaas.observer;
 
 import com.google.common.base.Objects;
+import com.msaas.camera.Screen;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
@@ -29,6 +34,9 @@ public class Observer {
     
     @NotNull
     public String state;
+    
+    @OneToMany(mappedBy = "observer", fetch = LAZY)
+    public List<Screen> screens = new LinkedList<Screen>();
 
     @Override
     public boolean equals(Object o) {
