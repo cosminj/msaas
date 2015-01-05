@@ -36,7 +36,7 @@ public class Observer {
     public String state;
     
     @OneToMany(mappedBy = "observer", fetch = LAZY)
-    public List<Screen> screens = new LinkedList<Screen>();
+    public List<Screen> screens = new LinkedList<>();
 
     @Override
     public boolean equals(Object o) {

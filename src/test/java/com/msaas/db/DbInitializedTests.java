@@ -1,7 +1,6 @@
 package com.msaas.db;
 
 import com.msaas.MsaasApplication;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author cj
@@ -20,13 +20,13 @@ import static org.junit.Assert.assertEquals;
 @SpringApplicationConfiguration(classes = MsaasApplication.class)
 @WebAppConfiguration
 public class DbInitializedTests {
-    
+
     @Autowired
     private JdbcTemplate template;
-    
+
     @Test
     public void testDefaultFixtures() {
-        assertEquals(new Integer(1), this.template.queryForObject("select count(*) from camera", Integer.class));
+        assertThat(this.template.queryForObject("SELECT count(*) FROM camera", Integer.class), greaterThanOrEqualTo(6));
     }
-    
+
 }
