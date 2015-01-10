@@ -14,7 +14,7 @@ class CustomerRepositorySpec extends AbstractIntegrationSpec {
     def setup() {
         given: " insert a test customer and a test mobile device/token "
         testCustomer = new Customer(
-                name: 'Darth Vader',
+                name: 'some test guy',
                 password: 'test'
         )
         customerRepository.save(testCustomer)
@@ -22,7 +22,7 @@ class CustomerRepositorySpec extends AbstractIntegrationSpec {
 
     def "should find a customer by name" () {
         expect:
-        customerRepository.findByName('Darth Vader') == testCustomer
+        customerRepository.findByName('some test guy') == testCustomer
     }
 
 }

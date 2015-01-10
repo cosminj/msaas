@@ -22,7 +22,7 @@ spring:
 server:
     port: ${port:7777}
     
-#flyway:
-#    baselineOnMigrate: true
-#    schemas: public
+flyway:
+    baselineOnMigrate: true
+    schemas: public
 
