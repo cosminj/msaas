@@ -1,43 +1,44 @@
-package com.msaas.camera;
+package com.msaas.model;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.msaas.customer.Customer;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-
 import java.util.Date;
 
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.SEQUENCE;
+import static javax.persistence.GenerationType.AUTO;
 
 /**
- * @author cj 
+ * @author cj
  * @since 31/12/14.
  */
 @Entity
-@SequenceGenerator(name = "camera_id_seq", sequenceName = "camera_id_seq")
 public class Camera {
-    
+
     @Id
-    @GeneratedValue(strategy = SEQUENCE, generator = "camera_id_seq")
+    @GeneratedValue(strategy = AUTO)
     public long id;
 
     @NotEmpty
     public String name;
-    
-    @ManyToOne(fetch = LAZY)
+
+    @ManyToOne(fetch = LAZY, cascade = ALL)
     @JoinColumn(name = "customer_id", foreignKey = @ForeignKey(name = "camera_customer_id_fkey"))
     public Customer customer;
-    
-    public String state;
-    
+
+    @Enumerated(STRING)
+    public CameraState state;
+
     public String tags;
-    
+
     public Date nextViewingAt;
-    
+
     public Integer startupDelay;
-    
+
     public String url;
 
     @Override
@@ -57,12 +58,12 @@ public class Camera {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("id", id)
                 .add("name", name)
                 .add("customer", customer)
-                .add("tags", tags)
                 .add("state", state)
+                .add("tags", tags)
                 .add("nextViewingAt", nextViewingAt)
                 .add("startupDelay", startupDelay)
                 .add("url", url)

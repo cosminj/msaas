@@ -1,9 +1,7 @@
 package com.msaas.security;
 
-import com.msaas.customer.Customer;
-import com.msaas.customer.CustomerRepository;
-import com.msaas.observer.Observer;
-import com.msaas.observer.ObserverRepository;
+import com.msaas.model.Observer;
+import com.msaas.infrastructure.ObserverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,9 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 
@@ -44,10 +42,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public static List<GrantedAuthority> getGrantedAuthorities(List<String> roles) {
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        for (String role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role));
-        }
-        return authorities;
+        return roles
+                .stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 }

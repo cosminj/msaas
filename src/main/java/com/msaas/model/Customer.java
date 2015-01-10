@@ -1,34 +1,40 @@
-package com.msaas.customer;
+package com.msaas.model;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
-import static javax.persistence.GenerationType.SEQUENCE;
+import static javax.persistence.GenerationType.AUTO;
 
 /**
  * @author cj
  * @since 28/12/14
  */
 @Entity
-@SequenceGenerator(name = "customer_id_seq", sequenceName = "customer_id_seq")
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = SEQUENCE, generator = "customer_id_seq")
+    @GeneratedValue(strategy = AUTO)
     public long id;
 
     @Column(unique = true)
     @NotEmpty
+    @NotNull
     public String name;
 
     @NotEmpty
+    @NotNull
     public String password;
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("id", id)
                 .add("name", name)
                 .add("password", password)
@@ -42,16 +48,11 @@ public class Customer {
 
         Customer customer = (Customer) o;
 
-        return id == customer.id &&
-                name.equals(customer.name) &&
-                password.equals(customer.password);
+        return id == customer.id;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + name.hashCode();
-        result = 31 * result + password.hashCode();
-        return result;
+        return (int) (id ^ (id >>> 32));
     }
 }

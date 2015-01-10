@@ -1,0 +1,1 @@
+insert into observer(id, name, password, state) values (1, 'Cosmin', 'Cosmins password', 'OFFLINE');

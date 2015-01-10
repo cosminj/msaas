@@ -1,7 +1,7 @@
-package com.msaas.camera;
+package com.msaas.model;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.msaas.observer.Observer;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,18 +10,17 @@ import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
-import static javax.persistence.GenerationType.SEQUENCE;
+import static javax.persistence.GenerationType.AUTO;
 
 /**
  * @author cj
  * @since 02/01/15.
  */
 @Entity
-@SequenceGenerator(name = "screen_id_seq", sequenceName = "screen_id_seq")
 public class Screen {
 
     @Id
-    @GeneratedValue(strategy = SEQUENCE, generator = "screen_id_seq")
+    @GeneratedValue(strategy = AUTO)
     public Long id;
 
     public Date scheduledAt;
@@ -41,10 +40,10 @@ public class Screen {
             inverseJoinColumns = {
                     @JoinColumn(name = "camera_id", referencedColumnName = "id")
             })
-    public List<Camera> cameras = new LinkedList<Camera>();
+    public List<Camera> cameras = new LinkedList<>();
 
-    public Screen() {
-    }
+    @SuppressWarnings("unused")
+    private Screen() {}
 
     public Screen(Observer observer) {
         this.observer = observer;
@@ -65,11 +64,12 @@ public class Screen {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("id", id)
                 .add("scheduledAt", scheduledAt)
                 .add("viewedAt", viewedAt)
                 .add("observer", observer)
+                .add("cameras", cameras)
                 .toString();
     }
 }

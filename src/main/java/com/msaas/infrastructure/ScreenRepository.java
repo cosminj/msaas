@@ -1,5 +1,6 @@
-package com.msaas.camera;
+package com.msaas.infrastructure;
 
+import com.msaas.model.Screen;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -9,7 +10,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  */
 @RepositoryRestResource(collectionResourceRel = "screens", path = "screens")
 public interface ScreenRepository extends PagingAndSortingRepository<Screen, Long> {
-    
-    
-    
+
+
 }

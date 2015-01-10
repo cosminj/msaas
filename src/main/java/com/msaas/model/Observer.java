@@ -1,7 +1,7 @@
-package com.msaas.observer;
+package com.msaas.model;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
-import com.msaas.camera.Screen;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -36,6 +36,7 @@ public class Observer {
     public String state;
     
     @OneToMany(mappedBy = "observer", fetch = LAZY)
+    @OrderBy("scheduledAt")
     public List<Screen> screens = new LinkedList<>();
 
     @Override
@@ -55,11 +56,12 @@ public class Observer {
 
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("id", id)
                 .add("name", name)
                 .add("password", password)
                 .add("state", state)
+                .add("screens", screens)
                 .toString();
     }
 }

@@ -1,5 +1,7 @@
-package com.msaas.customer;
+package com.msaas.rest;
 
+import com.msaas.infrastructure.CustomerRepository;
+import com.msaas.model.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class CustomerController {
 
     private final static Logger logger = LoggerFactory.getLogger(CustomerController.class);
-    
-    private final CustomerRepository customerRepository;
 
     @Autowired
-    public CustomerController(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
+    private CustomerRepository customerRepository;
 
     @RequestMapping("/customerDetails")
     public Customer getMyDetails(@AuthenticationPrincipal User user) {
