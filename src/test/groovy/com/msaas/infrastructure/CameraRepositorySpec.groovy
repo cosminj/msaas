@@ -20,7 +20,7 @@ class CameraRepositorySpec extends AbstractIntegrationSpec {
     private Date now
 
     def setup() {
-        given: "a customer, an observer, some cameras"
+        given: "a customer, some cameras"
         now = new Date()
         customer = new Customer(name: 'the customer', password: 'the password')
         customerRepo.save(customer)

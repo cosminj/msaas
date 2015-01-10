@@ -42,7 +42,7 @@ public class DbInitializedTests {
     public void should_have_a_next_screen() {
         UserDetails user = userDetailsService.loadUserByUsername("Cosmin");
 
-        observerController.nextScreen((User) user, 5);
+        observerController.nextScreen((User) user);
     }
 
 

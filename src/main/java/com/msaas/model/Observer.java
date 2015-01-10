@@ -39,6 +39,17 @@ public class Observer {
     @OrderBy("scheduledAt")
     public List<Screen> screens = new LinkedList<>();
 
+    public Screen getLastScreen() {
+        Screen lastScreen;
+        if(screens.isEmpty()) {
+            lastScreen = new Screen(this);
+            screens.add(lastScreen);
+        } else {
+            lastScreen = screens.get(screens.size() - 1);
+        }
+        return lastScreen;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

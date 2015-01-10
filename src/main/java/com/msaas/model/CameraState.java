@@ -1,5 +1,5 @@
 package com.msaas.model;
 
 public enum CameraState {
-    WAITING
+    WAITING, SCHEDULED, VIEWED
 }
