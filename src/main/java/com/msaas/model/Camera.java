@@ -1,7 +1,8 @@
 package com.msaas.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class Camera {
     @NotEmpty
     public String name;
 
+    @JsonIgnore
     @ManyToOne(fetch = LAZY, cascade = ALL)
     @JoinColumn(name = "customer_id", foreignKey = @ForeignKey(name = "camera_customer_id_fkey"))
     public Customer customer;
@@ -35,6 +37,7 @@ public class Camera {
 
     public String tags;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd,HH:mm:ss", timezone = "CET")
     public Date nextViewingAt;
 
     public Integer startupDelay;

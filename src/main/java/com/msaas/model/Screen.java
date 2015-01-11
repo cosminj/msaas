@@ -1,5 +1,7 @@
 package com.msaas.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.MoreObjects;
 
 import javax.persistence.*;
@@ -8,6 +10,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
@@ -23,11 +26,14 @@ public class Screen {
     @GeneratedValue(strategy = AUTO)
     public Long id;
 
+    @JsonFormat(shape= STRING, pattern="yyyy-MM-dd,HH:mm:ss", timezone="CET")
     @NotNull
     public Date scheduledAt;
 
+    @JsonFormat(shape= STRING, pattern="yyyy-MM-dd,HH:mm:ss", timezone="CET")
     public Date viewedAt;
 
+    @JsonIgnore
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "observer_id", foreignKey = @ForeignKey(name = "screen_operator_id_fkey"))
     public Observer observer;
