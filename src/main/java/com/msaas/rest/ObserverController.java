@@ -63,9 +63,6 @@ public class ObserverController {
     protected Screen markLastScreenViewed(Screen lastScreen) {
         // mark last screen as viewed
         lastScreen.viewedAt = new Date();
-        if (lastScreen.scheduledAt == null) {
-            lastScreen.scheduledAt = new Date();
-        }
         return screenRepository.save(lastScreen);
     }
 

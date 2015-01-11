@@ -1,9 +1,9 @@
 package com.msaas.model;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,6 +23,7 @@ public class Screen {
     @GeneratedValue(strategy = AUTO)
     public Long id;
 
+    @NotNull
     public Date scheduledAt;
 
     public Date viewedAt;
@@ -47,6 +48,7 @@ public class Screen {
 
     public Screen(Observer observer) {
         this.observer = observer;
+        scheduledAt = new Date();
     }
 
     @Override
@@ -68,7 +70,6 @@ public class Screen {
                 .add("id", id)
                 .add("scheduledAt", scheduledAt)
                 .add("viewedAt", viewedAt)
-                .add("observer", observer)
                 .add("cameras", cameras)
                 .toString();
     }

@@ -8,8 +8,10 @@ import com.msaas.infrastructure.ScreenRepository
 import com.msaas.model.Camera
 import com.msaas.model.Customer
 import com.msaas.model.Observer
+import com.msaas.model.Screen
 import org.springframework.beans.factory.annotation.Autowired
 
+import static com.msaas.model.CameraState.SCHEDULED
 import static com.msaas.model.CameraState.WAITING
 
 class ObserverControllerSpec extends AbstractIntegrationSpec {
@@ -40,10 +42,24 @@ class ObserverControllerSpec extends AbstractIntegrationSpec {
     }
 
     def "should mark the last screen as viewed" () {
+        given:
+        Screen lastScreen = observer.lastScreen
         when:
-        observerController.markLastScreenViewed(observer)
+        observerController.markLastScreenViewed(lastScreen)
         then:
-        observer.screens.size() == 1
+        lastScreen.viewedAt
+    }
+
+    def "should compute next screen" () {
+        when:
+        Screen screen = observerController.computeNextScreen(observer)
+        then:
+        screen
+        screen.cameras.size() == 4
+        screen.cameras.each { c ->
+            assert c.state == SCHEDULED
+            assert c.nextViewingAt == screen.scheduledAt
+        }
     }
 
 
