@@ -6,6 +6,8 @@ import com.google.common.base.MoreObjects;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.util.Date;
 
 import static javax.persistence.CascadeType.ALL;
@@ -35,6 +37,7 @@ public class Camera {
     @Enumerated(STRING)
     public CameraState state;
 
+    @NotNull
     public String tags;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd,HH:mm:ss", timezone = "CET")
