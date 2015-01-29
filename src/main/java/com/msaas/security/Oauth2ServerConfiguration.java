@@ -1,7 +1,6 @@
 package com.msaas.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -18,10 +17,6 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
-/**
- * @author cj
- * @since 29/12/14.
- */
 @Configuration
 public class Oauth2ServerConfiguration {
 
@@ -37,8 +32,9 @@ public class Oauth2ServerConfiguration {
 
         @Override
         public void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests().antMatchers("/**").authenticated();
-
+            http
+                .authorizeRequests()
+                .antMatchers("/server/**").authenticated();
         }
     }
 
@@ -48,27 +44,23 @@ public class Oauth2ServerConfiguration {
         private TokenStore tokenStore = new InMemoryTokenStore();
 
         @Autowired
-        @Qualifier("authenticationManagerBean")
         private AuthenticationManager authenticationManager;
 
         @Override
-        public void configure(AuthorizationServerEndpointsConfigurer endpoints)
-                throws Exception {
-            endpoints
-                    .tokenStore(this.tokenStore)
-                    .authenticationManager(this.authenticationManager);
+        public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+            endpoints.tokenStore(tokenStore).authenticationManager(authenticationManager);
         }
 
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
             clients
-                    .inMemory()
-                    .withClient("clientapp")
-                    .authorizedGrantTypes("password", "refresh_token")
-                    .authorities("USER")
-                    .scopes("read", "write")
-                    .resourceIds(RESOURCE_ID)
-                    .secret("123456");
+                .inMemory()
+                .withClient("clientapp")
+                .authorizedGrantTypes("password", "refresh_token")
+                .authorities("USER")
+                .scopes("read", "write")
+                .resourceIds(RESOURCE_ID)
+                .secret("123456");
         }
 
         @Bean
@@ -79,7 +71,5 @@ public class Oauth2ServerConfiguration {
             tokenServices.setTokenStore(this.tokenStore);
             return tokenServices;
         }
-
-
     }
 }

@@ -10,10 +10,6 @@ import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author cj 
- * @since 30/12/14
- */
 @RestController
 public class CustomerController {
 
@@ -22,7 +18,7 @@ public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
 
-    @RequestMapping("/customerDetails")
+    @RequestMapping("/server/customerDetails")
     public Customer getMyDetails(@AuthenticationPrincipal User user) {
         logger.info("User get my details {}", user);
         return customerRepository.findByName(user.getUsername());

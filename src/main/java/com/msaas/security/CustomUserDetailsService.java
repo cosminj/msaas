@@ -17,10 +17,6 @@ import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
 
-/**
- * @author cj
- * @since 30/12/14
- */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 

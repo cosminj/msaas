@@ -25,10 +25,6 @@ import static java.util.Date.from;
 import static javax.transaction.Transactional.TxType.REQUIRED;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
-/**
- * @author cj
- * @since 02/01/15.
- */
 @RestController
 public class ObserverController {
 
@@ -43,7 +39,7 @@ public class ObserverController {
         this.cameraRepository = cameraRepository;
     }
 
-    @RequestMapping("/nextScreen")
+    @RequestMapping("/server/nextScreen")
     @Transactional(value = REQUIRED)
     public Screen nextScreen(@AuthenticationPrincipal User user) {
         Observer observer = observerRepository.findByName(user.getUsername());

@@ -1,15 +1,11 @@
 package com.msaas.infrastructure;
 
-import com.msaas.model.Screen;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.stereotype.Repository;
 
-/**
- * @author cj
- * @since 02/01/15.
- */
-@RepositoryRestResource(collectionResourceRel = "screens", path = "screens")
+import com.msaas.model.Screen;
+
+@Repository
 public interface ScreenRepository extends PagingAndSortingRepository<Screen, Long> {
-
 
 }
