@@ -26,7 +26,7 @@ class CameraRepositorySpec extends AbstractIntegrationSpec {
         customerRepo.save(customer)
 
         (0..20).each { int i ->
-            cameraRepo.save(new Camera(name: "camera$i", customer: customer, state: WAITING, url: "url$i", nextViewingAt: now + i))
+            cameraRepo.save(new Camera(name: "test camera$i", customer: customer, state: WAITING, url: "url$i", nextViewingAt: now + i))
         }
     }
 

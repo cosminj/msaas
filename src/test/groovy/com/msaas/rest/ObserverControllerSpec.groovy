@@ -10,6 +10,7 @@ import com.msaas.model.Customer
 import com.msaas.model.Observer
 import com.msaas.model.Screen
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.userdetails.UserDetailsService
 
 import static com.msaas.model.CameraState.SCHEDULED
 import static com.msaas.model.CameraState.WAITING
@@ -26,6 +27,8 @@ class ObserverControllerSpec extends AbstractIntegrationSpec {
     private ScreenRepository screenRepo
     @Autowired
     private ObserverRepository observerRepo
+    @Autowired
+    private UserDetailsService userDetailsService
 
     private Customer customer
     private Date now
@@ -62,5 +65,10 @@ class ObserverControllerSpec extends AbstractIntegrationSpec {
         }
     }
 
-
+    def "should have a next screen" () {
+        given:
+        def user = userDetailsService.loadUserByUsername 'Cosmin'
+        expect:
+        observerController.nextScreen(user)
+    }
 }

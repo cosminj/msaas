@@ -38,6 +38,7 @@ public class Camera {
     public CameraState state;
 
     @NotNull
+    @Column(nullable = false)
     public String tags;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd,HH:mm:ss", timezone = "CET")
