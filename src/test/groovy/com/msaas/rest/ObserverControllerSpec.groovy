@@ -10,6 +10,8 @@ import com.msaas.model.Customer
 import com.msaas.model.Observer
 import com.msaas.model.Screen
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 
 import static com.msaas.model.CameraState.SCHEDULED
@@ -39,12 +41,18 @@ class ObserverControllerSpec extends AbstractIntegrationSpec {
         now = new Date()
         customer = customerRepo.save(new Customer(name: 'the customer', password: 'the password'))
         (0..20).each { int i ->
-            cameraRepo.save(new Camera(name: "camera$i", customer: customer, state: WAITING, url: "url$i", nextViewingAt: now + i))
+            cameraRepo.save(new Camera(name: "camera$i",
+                    customer: customer,
+                    state: WAITING,
+                    url: "url$i",
+                    nextViewingAt: now + i,
+                    tags: '#some #tags',
+                    startupDelay: 1))
         }
         observer = observerRepo.save(new Observer(name: 'some test observer', password: 'observers password', state: 'ONLINE'))
     }
 
-    def "should mark the last screen as viewed" () {
+    def "should mark the last screen as viewed"() {
         given:
         Screen lastScreen = observer.lastScreen
         when:
@@ -53,7 +61,7 @@ class ObserverControllerSpec extends AbstractIntegrationSpec {
         lastScreen.viewedAt
     }
 
-    def "should compute next screen" () {
+    def "should compute next screen"() {
         when:
         Screen screen = observerController.computeNextScreen(observer)
         then:
@@ -65,9 +73,10 @@ class ObserverControllerSpec extends AbstractIntegrationSpec {
         }
     }
 
-    def "should have a next screen" () {
+    def "should have a next screen"() {
         given:
-        def user = userDetailsService.loadUserByUsername 'Cosmin'
+        User user = Mock(User)
+        user.getUsername() >> 'Cosmin'
         expect:
         observerController.nextScreen(user)
     }

@@ -21,7 +21,7 @@ class ObserverRepositorySpec extends AbstractIntegrationSpec {
         observerRepository.save(testObs)
     }
 
-    def "should find a customer by name"() {
+    def "should find an observer by name"() {
         expect:
         observerRepository.findByName('Darth Vader') == testObs
     }

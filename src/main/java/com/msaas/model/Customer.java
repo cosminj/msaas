@@ -11,10 +11,6 @@ import javax.validation.constraints.NotNull;
 
 import static javax.persistence.GenerationType.AUTO;
 
-/**
- * @author cj
- * @since 28/12/14
- */
 @Entity
 public class Customer {
 

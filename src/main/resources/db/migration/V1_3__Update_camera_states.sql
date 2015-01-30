@@ -1,1 +1,0 @@
-update camera set state = 'WAITING';
