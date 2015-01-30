@@ -14,6 +14,6 @@ class CustomerUserDetailsServiceTest extends AbstractIntegrationSpec {
         expect:
         UserDetails user = userDetailsService.loadUserByUsername 'Cosmin'
         user.username == 'Cosmin'
-        user.password == 'thepass'
+        user.password == 'Cosmins password'
     }
 }
