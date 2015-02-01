@@ -6,10 +6,11 @@ import com.msaas.model.Customer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Sort
 
+import static com.msaas.model.CameraState.OFFLINE
 import static com.msaas.model.CameraState.WAITING
 import static org.springframework.data.domain.Sort.Direction.ASC
 
-class CameraRepositorySpec extends AbstractIntegrationSpec {
+class CameraRepositoryTest extends AbstractIntegrationSpec {
 
     @Autowired
     private CameraRepository cameraRepo
@@ -25,7 +26,12 @@ class CameraRepositorySpec extends AbstractIntegrationSpec {
         customer = new Customer(name: 'the customer', password: 'the password')
         customerRepo.save(customer)
 
-        (0..16).each { int i ->
+
+    }
+
+    def "should be able to find the cameras"() {
+        given:
+        (0..16).each { i ->
             cameraRepo.save(new Camera(
                     name: "test camera$i",
                     customer: customer,
@@ -34,17 +40,29 @@ class CameraRepositorySpec extends AbstractIntegrationSpec {
                     tags: '#some #tags',
                     startupDelay: 1))
         }
+
+        when:
+        def cameras = cameraRepo.findTop4ByState(WAITING, new Sort(ASC, 'nextViewingAt'))
+        then:
+        cameras.size() == 4
+        cameras.each { cam -> assert cam.state == WAITING }
     }
 
-    def "should be able to find the cameras"() {
+    def "should fetch only WAITING cams" () {
+        given:
+        cameraRepo.deleteAll()
+        (0..4).each { i -> cameraRepo.save(new Camera(
+                name: "test camera$i",
+                customer: customer,
+                state: OFFLINE, url: "url$i",
+                nextViewingAt: now + i,
+                tags: '#some #tags',
+                startupDelay: 1))}
+
         when:
-        def list = cameraRepo.findTop4ByState(WAITING, new Sort(ASC, 'nextViewingAt'))
+        def cameras = cameraRepo.findTop4ByState(WAITING, new Sort(ASC, 'nextViewingAt'))
         then:
-        list.size() == 4
-//        (0..3).each { int i ->
-//            assert list[i].nextViewingAt == now + i
-//            assert list[i].url == "url$i"
-//            assert list[i].name == "camera$i"
-//        }
+        cameras.size() == 0
+//        cameras.each { cam -> assert cam.state == WAITING }
     }
 }

@@ -1,5 +1,6 @@
 package com.msaas.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.MoreObjects;
@@ -9,8 +10,11 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
@@ -47,6 +51,10 @@ public class Camera {
     public Integer startupDelay;
 
     public String url;
+
+    @JsonBackReference()
+    @ManyToMany(mappedBy = "cameras", fetch = LAZY, cascade = REMOVE)
+    public List<Screen> screens = new LinkedList<>();
 
     @Override
     public boolean equals(Object o) {
