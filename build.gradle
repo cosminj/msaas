@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.2.1.BUILD-SNAPSHOT'
+        springBootVersion = '1.2.2.BUILD-SNAPSHOT'
         springSecurityOauth2Version = '2.0.5.RELEASE'
     }
     repositories {
@@ -9,6 +9,7 @@ buildscript {
         maven { url "https://repo.spring.io/snapshot" }
         maven { url "https://repo.spring.io/milestone" }
         maven { url "https://repo.spring.io/libs-release" }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots'}
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -29,6 +30,7 @@ repositories {
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
     maven { url "https://repo.spring.io/libs-release" }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots'}
 }
 
 jar {
@@ -58,8 +60,8 @@ dependencies {
     testCompile 'cglib:cglib-nodep:3.1'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.codehaus.groovy:groovy-all:2.2.0'
-    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
-    testCompile 'org.spockframework:spock-spring:0.7-groovy-2.0'
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.3-SNAPSHOT'
+    testCompile 'org.spockframework:spock-spring:1.0-groovy-2.3-SNAPSHOT'
     testCompile 'org.hsqldb:hsqldb:2.3.2'
 }
 
