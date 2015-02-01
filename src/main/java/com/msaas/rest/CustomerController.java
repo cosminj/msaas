@@ -13,14 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CustomerController {
 
-    private final static Logger logger = LoggerFactory.getLogger(CustomerController.class);
-
     @Autowired
     private CustomerRepository customerRepository;
 
     @RequestMapping("/server/customerDetails")
     public Customer getMyDetails(@AuthenticationPrincipal User user) {
-        logger.info("User get my details {}", user);
         return customerRepository.findByName(user.getUsername());
     }
 }
