@@ -1,1 +1,8 @@
-<div ng-controller="VideoCtrl as video"> <button type="button" class="btn btn-primary" ng-click="video.cameraList()">Next screen</button> <div ng-repeat="camera in screen.cameras"> {{ camera.name }} <img src="{{camera.url}}"> </div> </div>
+<div ng-controller="VideoCtrl as video"> <button type="button" class="btn btn-primary" ng-click="video.cameraList()">Next screen</button> <br> <style type="text/css">div {
+      display: inline;
+    }
+
+    img {
+      width: 670px;
+      height: 500px;
+    }</style> <div ng-repeat="camera in screen.cameras"> <div style="position: absolute; color: #B00040">{{ camera.name }} <button onclick="alert('Intruder alert!')">Notify!</button> </div> <img src="{{camera.url}}"> </div> </div>
