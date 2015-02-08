@@ -14,9 +14,6 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
-    configurations {
-        compile.exclude module: "spring-boot-starter-tomcat"
-    }
 }
 
 apply plugin: 'java'
@@ -47,7 +44,6 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-undertow'
     compile("org.springframework.boot:spring-boot-starter-security")
     compile "org.springframework.security.oauth:spring-security-oauth2:${springSecurityOauth2Version}"
     compile("org.springframework.boot:spring-boot-starter-aop")
