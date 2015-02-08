@@ -67,4 +67,4 @@ task wrapper(type: Wrapper) {
 
 mainClassName = "com.msaas.MsaasApplication"
 
-task stage(dependsOn: ['check', 'installApp'])
+task stage(dependsOn: ['installApp'])
