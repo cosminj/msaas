@@ -2,6 +2,7 @@ package com.msaas.service;
 
 import static com.msaas.model.CameraState.SCHEDULED;
 import static com.msaas.model.CameraState.WAITING;
+import static com.msaas.security.OauthConfiguration.ROLE_OBS;
 import static java.time.LocalDateTime.now;
 import static java.time.ZoneId.systemDefault;
 import static java.util.Date.from;
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.msaas.infrastructure.CameraRepository;
@@ -31,6 +33,7 @@ public class ScreenService {
     @Resource
     private ScreenRepository screenRepository;
 
+    @PreAuthorize("hasRole('" + ROLE_OBS + "')")
     public Screen scrollNextScreen(Observer observer) {
         // mark last screen as viewed
         Screen lastScreen = markLastScreenViewed(observer.getLastScreen());
@@ -44,6 +47,7 @@ public class ScreenService {
         return newScreen;
     }
 
+    @PreAuthorize("hasRole('" + ROLE_OBS + "')")
     public Screen computeNextScreen(Observer observer) {
 
         // find next top 4 newCameras in state WAITING (sorted by nextViewingAt)
@@ -65,12 +69,14 @@ public class ScreenService {
         return newScreen;
     }
 
+    @PreAuthorize("hasRole('" + ROLE_OBS + "')")
     public Screen markLastScreenViewed(Screen lastScreen) {
         // mark last screen as viewed
         lastScreen.viewedAt = new Date();
         return screenRepository.save(lastScreen);
     }
 
+    @PreAuthorize("hasRole('" + ROLE_OBS + "')")
     public void resetAllCameras(Screen lastScreen) {
         // reset all the cameras
         lastScreen.cameras.forEach(camera -> {

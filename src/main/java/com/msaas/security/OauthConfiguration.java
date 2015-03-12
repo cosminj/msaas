@@ -1,6 +1,7 @@
 package com.msaas.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -18,9 +19,14 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 @Configuration
-public class Oauth2ServerConfiguration {
+public class OauthConfiguration {
 
     private static final String RESOURCE_ID = "msaas";
+    private static final String CLIENT_SECRET = "jhfads07ay7qwhcrq6787436ghrc8q3746fgx8347fgj97634gfx9j3467fg927";
+
+    public static final String ROLE_ADMIN = "ADMIN";
+    public static final String ROLE_OBS = "OBSERVER";
+    public static final String ROLE_CUSTOMER = "CUSTOMER";
 
     @Configuration
     @EnableResourceServer
@@ -34,7 +40,8 @@ public class Oauth2ServerConfiguration {
         public void configure(HttpSecurity http) throws Exception {
             http
                 .authorizeRequests()
-                .antMatchers("/server/**").authenticated();
+                .antMatchers("/server/nextScreen").hasAnyRole(ROLE_OBS, ROLE_ADMIN)
+                .antMatchers("/server/customerDetails").hasAnyRole(ROLE_CUSTOMER, ROLE_ADMIN);
         }
     }
 
@@ -43,7 +50,7 @@ public class Oauth2ServerConfiguration {
     protected static class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
         private TokenStore tokenStore = new InMemoryTokenStore();
 
-        @Autowired
+        @Resource
         private AuthenticationManager authenticationManager;
 
         @Override
@@ -55,12 +62,12 @@ public class Oauth2ServerConfiguration {
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
             clients
                 .inMemory()
-                .withClient("clientapp")
+                .withClient("mSaasWebClient")
                 .authorizedGrantTypes("password", "refresh_token")
-                .authorities("USER")
+                .authorities(ROLE_OBS, ROLE_ADMIN, ROLE_CUSTOMER)
                 .scopes("read", "write")
                 .resourceIds(RESOURCE_ID)
-                .secret("123456");
+                .secret(CLIENT_SECRET);
         }
 
         @Bean

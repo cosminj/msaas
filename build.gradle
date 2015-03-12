@@ -1,13 +1,10 @@
 buildscript {
     ext {
-        springBootVersion = '1.2.1.RELEASE'
+        springBootVersion = '1.2.2.RELEASE'
         springSecurityOauth2Version = '2.0.6.RELEASE'
     }
     repositories {
-        mavenLocal()
         mavenCentral()
-        maven { url "https://repo.spring.io/libs-release" }
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots'}
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -20,10 +17,8 @@ apply plugin: 'idea'
 apply plugin: 'spring-boot'
 
 repositories {
-    mavenLocal()
     mavenCentral()
-    maven { url "https://repo.spring.io/libs-release" }
-    maven { url 'https://oss.sonatype.org/content/repositories/snapshots'}
+    maven { url 'https://repository.jboss.org/nexus/content/groups/public' }
 }
 
 jar {
@@ -41,15 +36,17 @@ targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-security")
-    compile "org.springframework.security.oauth:spring-security-oauth2:${springSecurityOauth2Version}"
-    compile("org.springframework.boot:spring-boot-starter-aop")
-    compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-ws")
-    compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // not included in boot
+    compile "org.springframework.security.oauth:spring-security-oauth2:${springSecurityOauth2Version}"
+
     compile("postgresql:postgresql:9.1-901.jdbc4")
     compile 'com.google.guava:guava:18.0'
+
     testCompile 'cglib:cglib-nodep:3.1'
+
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.codehaus.groovy:groovy-all:2.2.0'
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.3-SNAPSHOT'
@@ -58,9 +55,9 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.2.1'
+    gradleVersion = '2.3'
 }
 
-mainClassName = "com.msaas.MsaasApplication"
+mainClassName = "com.msaas.MSaas"
 
 task stage(dependsOn: ['installApp'])

@@ -18,10 +18,10 @@ Example of authenticating a client with oauth:
 
 GET a token:
 
-curl -X POST -vu clientapp:123456 http://localhost:7777/oauth/token -H "Accept: application/json" -d "password=mypassw&username=Cosmin&grant_type=password&scope=read%20write&client_secret=123456&client_id=clientapp"
+curl -X POST -vu mSaasWebClient:jhfads07ay7qwhcrq6787436ghrc8q3746fgx8347fgj97634gfx9j3467fg927 http://localhost:7777/oauth/token -H "Accept: application/json" -d "password=cosmin&username=Cosmin&grant_type=password&scope=read%20write&client_secret=jhfads07ay7qwhcrq6787436ghrc8q3746fgx8347fgj97634gfx9j3467fg927&client_id=mSaasWebClient"
 
 Then use the token to get the protected resource:
 
-curl http://localhost:8080/greeting -H "Authorization: Bearer token_received_previously"
+curl http://localhost:7777/server/customerDetails -H "Authorization: Bearer 91116c05-4c57-43fe-a18d-a2ecd775a362"
 
 

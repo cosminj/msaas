@@ -3,7 +3,7 @@ package com.msaas
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 
-class MsaasApplicationTest extends AbstractIntegrationSpec {
+class MSaasTest extends AbstractIntegrationSpec {
 
     @Autowired
     private JdbcTemplate template

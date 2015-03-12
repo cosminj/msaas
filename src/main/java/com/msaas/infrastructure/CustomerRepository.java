@@ -1,13 +1,16 @@
 package com.msaas.infrastructure;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.repository.query.Param;
+import static com.msaas.security.OauthConfiguration.ROLE_ADMIN;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
 import com.msaas.model.Customer;
 
 @Repository
-public interface CustomerRepository extends PagingAndSortingRepository<Customer, Long> {
+public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
-    Customer findByName(@Param("name") String name);
+    @PreAuthorize("hasRole('" + ROLE_ADMIN + "')")
+    Customer findByName(String name);
 }
