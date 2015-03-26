@@ -1,3 +1,8 @@
+
+[![Build Status](https://travis-ci.org/cosminj/msaas.svg?branch=master)](https://travis-ci.org/cosminj/msaas)
+[![Coverage Status](https://img.shields.io/coveralls/cosminj/msaas.svg?branch=master)](https://coveralls.io/r/cosminj/msaas?branch=master)
+[![Heroku deployed](https://heroku-badge.herokuapp.com/?app=msaas-server)](https://msaas-server.herokuapp.com)
+
 Server backend for MSaas implemented as a Spring app with following dependencies:
 
 Spring - Boot, Oauth2, JPA, JPA Rest, Security
