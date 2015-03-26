@@ -1,8 +1,6 @@
 package com.msaas.service;
 
-import static com.msaas.model.CameraState.SCHEDULED;
 import static com.msaas.model.CameraState.WAITING;
-import static com.msaas.security.OauthConfiguration.ROLE_OBS;
 import static java.time.LocalDateTime.now;
 import static java.time.ZoneId.systemDefault;
 import static java.util.Date.from;
@@ -21,8 +19,8 @@ import org.springframework.stereotype.Service;
 import com.msaas.infrastructure.CameraRepository;
 import com.msaas.infrastructure.ScreenRepository;
 import com.msaas.model.Camera;
-import com.msaas.model.Observer;
 import com.msaas.model.Screen;
+import com.msaas.model.User;
 
 @Service
 @Transactional
@@ -33,55 +31,35 @@ public class ScreenService {
     @Resource
     private ScreenRepository screenRepository;
 
-    @PreAuthorize("hasRole('" + ROLE_OBS + "')")
-    public Screen scrollNextScreen(Observer observer) {
+    @PreAuthorize("hasRole('OBSERVER')")
+    public Screen scrollNextScreen(User user) {
         // mark last screen as viewed
-        Screen lastScreen = markLastScreenViewed(observer.getLastScreen());
+        Screen lastScreen = user.getLastScreen().markViewed();
+        screenRepository.save(lastScreen);
 
         // compute next one
-        Screen newScreen = computeNextScreen(observer);
+        Screen newScreen = computeNextScreen(user);
 
         // reset cameras of last screen to WAITING
-        resetAllCameras(lastScreen);
+        lastScreen.getCameras().forEach(c -> cameraRepository.save(c.makeWaiting()));
 
         return newScreen;
     }
 
-    @PreAuthorize("hasRole('" + ROLE_OBS + "')")
-    public Screen computeNextScreen(Observer observer) {
+    @PreAuthorize("hasRole('OBSERVER')")
+    public Screen computeNextScreen(User user) {
 
         // find next top 4 newCameras in state WAITING (sorted by nextViewingAt)
         List<Camera> newCameras = cameraRepository.findTop4ByState(WAITING, new Sort(ASC, "nextViewingAt"));
 
-        // insert new screen
-        Screen newScreen = new Screen(observer);
-        newScreen.scheduledAt = from(now().plusSeconds(60).atZone(systemDefault()).toInstant());
-        newScreen.cameras.addAll(newCameras);
+        // insert new screen 60 seconds from now
+        Date scheduledAt = from(now().plusSeconds(60).atZone(systemDefault()).toInstant());
+        Screen newScreen = new Screen(scheduledAt, null, user, newCameras);
         screenRepository.save(newScreen);
 
         // reset the state of these newCameras to scheduled
-        newCameras.forEach(camera -> {
-            camera.state = SCHEDULED;
-            camera.nextViewingAt = newScreen.scheduledAt;
-            cameraRepository.save(camera);
-        });
+        newCameras.forEach(c -> cameraRepository.save(c.scheduleMe(newScreen.getScheduledAt())));
 
         return newScreen;
-    }
-
-    @PreAuthorize("hasRole('" + ROLE_OBS + "')")
-    public Screen markLastScreenViewed(Screen lastScreen) {
-        // mark last screen as viewed
-        lastScreen.viewedAt = new Date();
-        return screenRepository.save(lastScreen);
-    }
-
-    @PreAuthorize("hasRole('" + ROLE_OBS + "')")
-    public void resetAllCameras(Screen lastScreen) {
-        // reset all the cameras
-        lastScreen.cameras.forEach(camera -> {
-            camera.state = WAITING;
-            cameraRepository.save(camera);
-        });
     }
 }

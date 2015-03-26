@@ -1,7 +1,5 @@
 package com.msaas.infrastructure;
 
-import static com.msaas.security.OauthConfiguration.ROLE_OBS;
-
 import java.util.List;
 
 import org.springframework.data.domain.Sort;
@@ -15,6 +13,6 @@ import com.msaas.model.CameraState;
 @Repository
 public interface CameraRepository extends PagingAndSortingRepository<Camera, Long> {
 
-    @PreAuthorize("hasRole('" + ROLE_OBS + "')")
+    @PreAuthorize("hasRole('OBSERVER')")
     List<Camera> findTop4ByState(CameraState state, Sort sort);
 }

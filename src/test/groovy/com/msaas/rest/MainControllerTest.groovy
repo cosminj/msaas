@@ -1,26 +1,32 @@
-package com.msaas.service
+package com.msaas.rest
 
 import com.msaas.AbstractIntegrationSpec
 import com.msaas.infrastructure.CameraRepository
+import com.msaas.infrastructure.ScreenRepository
 import com.msaas.infrastructure.UserRepository
 import com.msaas.model.Camera
 import com.msaas.model.Role
 import com.msaas.model.Screen
 import com.msaas.model.User
+import org.springframework.security.core.userdetails.UserDetailsService
 
 import javax.annotation.Resource
 
-import static com.msaas.model.CameraState.SCHEDULED
 import static com.msaas.model.CameraState.WAITING
 
-class ScreenServiceTest extends AbstractIntegrationSpec {
+class MainControllerTest extends AbstractIntegrationSpec {
 
     @Resource
-    private CameraRepository cameraRepo
+    private MainController mainController
     @Resource
     private UserRepository userRepo
     @Resource
-    private ScreenService screenService
+    private CameraRepository cameraRepo
+    @Resource
+    private ScreenRepository screenRepo
+    @Resource
+    private UserDetailsService userDetailsService
+
     private User customer
     private Date now
     private User observer
@@ -38,29 +44,18 @@ class ScreenServiceTest extends AbstractIntegrationSpec {
                     tags: '#some #tags',
                     startupDelay: 1))
         }
-        observer = userRepo.save(new User(name: 'some test observer', password: 'observers password', role: Role.OBSERVER))
+        observer = userRepo.save(new User(name: 'some test observer', password: 'observers password'))
     }
 
-    def "should scroll to next screen"() {
+    def "should have a next screen"() {
+        given:
+        Screen screen
+        org.springframework.security.core.userdetails.User observer = Mock(org.springframework.security.core.userdetails.User)
+        observer.getUsername() >> 'some test observer'
         when:
-        Screen screen = screenService.scrollNextScreen(observer)
-        then:
-        screen.cameras.size() == 4
-        screen.cameras.each { c ->
-            assert c.state == SCHEDULED
-            assert c.nextViewingAt == screen.scheduledAt
-        }
-    }
-
-    def "should compute next screen"() {
-        when:
-        Screen screen = screenService.computeNextScreen(observer)
+        screen = mainController.nextScreen(observer)
         then:
         screen
         screen.cameras.size() == 4
-        screen.cameras.each { c ->
-            assert c.state == SCHEDULED
-            assert c.nextViewingAt == screen.scheduledAt
-        }
     }
 }

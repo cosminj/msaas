@@ -20,19 +20,19 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = AUTO)
-    public long id;
+    private long id;
 
     @NotNull
     @NotEmpty
-    public EventType type;
+    private EventType type;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "camera_id", foreignKey = @ForeignKey(name = "event_camera_id_fKey"))
-    public Camera camera;
+    private Camera camera;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "screen_id", foreignKey = @ForeignKey(name = "event_screen_id_fKey"))
-    public Screen screen;
+    private Screen screen;
 
     @Override
     public String toString() {

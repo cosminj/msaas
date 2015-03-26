@@ -24,3 +24,20 @@ logging.level: INFO
 server:
     port: ${port:7777}
 
+---
+
+spring:
+  profiles: test
+
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:notification
+
+  jpa:
+    database: H2
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.H2Dialect
+
+logging.level.org.springframework.jdbc.core: TRACE

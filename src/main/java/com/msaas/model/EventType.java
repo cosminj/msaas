@@ -2,6 +2,6 @@ package com.msaas.model;
 
 public enum EventType {
 
-    breakIn, theft
+    BREAK_IN, THEFT
 
 }

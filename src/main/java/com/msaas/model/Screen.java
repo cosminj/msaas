@@ -24,19 +24,19 @@ public class Screen {
 
     @Id
     @GeneratedValue(strategy = AUTO)
-    public Long id;
+    private long id;
 
     @JsonFormat(shape= STRING, pattern="yyyy-MM-dd,HH:mm:ss", timezone="CET")
     @NotNull
-    public Date scheduledAt;
+    private Date scheduledAt;
 
     @JsonFormat(shape= STRING, pattern="yyyy-MM-dd,HH:mm:ss", timezone="CET")
-    public Date viewedAt;
+    private Date viewedAt;
 
     @JsonIgnore
     @ManyToOne(fetch = EAGER)
-    @JoinColumn(name = "observer_id", foreignKey = @ForeignKey(name = "screen_operator_id_fkey"))
-    public Observer observer;
+    @JoinColumn(name = "observer_id", foreignKey = @ForeignKey(name = "screen_observer_id_fkey"))
+    private User observer;
 
     @ManyToMany(fetch = LAZY)
     @JoinTable(
@@ -47,36 +47,61 @@ public class Screen {
             inverseJoinColumns = {
                     @JoinColumn(name = "camera_id", referencedColumnName = "id")
             })
-    public List<Camera> cameras = new LinkedList<>();
+    private List<Camera> cameras = new LinkedList<>();
 
     @SuppressWarnings("unused")
     private Screen() {}
 
-    public Screen(Observer observer) {
-        this.observer = observer;
+    public Screen(User user) {
+        this.observer = user;
         scheduledAt = new Date();
+    }
+
+    public Screen(Date scheduledAt, Date viewedAt, User user, List<Camera> cameras) {
+        this.scheduledAt = scheduledAt;
+        this.viewedAt = viewedAt;
+        this.observer = user;
+        this.cameras = cameras;
+    }
+
+    public Date getScheduledAt() {
+        return scheduledAt;
+    }
+
+    public Screen markViewed() {
+        this.viewedAt = new Date();
+        return this;
+    }
+
+    public List<Camera> getCameras() {
+        return cameras;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Screen)) {
+            return false;
+        }
         Screen screen = (Screen) o;
-        return id.equals(screen.id);
+        return java.util.Objects.equals(id, screen.id);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return java.util.Objects.hash(id);
     }
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("scheduledAt", scheduledAt)
-                .add("viewedAt", viewedAt)
-                .add("cameras", cameras)
-                .toString();
+            .add("id", id)
+            .add("scheduledAt", scheduledAt)
+            .add("viewedAt", viewedAt)
+            .add("observer", observer)
+            .add("cameras", cameras)
+            .toString();
     }
 }

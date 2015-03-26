@@ -1,7 +1,6 @@
 package com.msaas.security;
 
-import static com.msaas.security.OauthConfiguration.ROLE_OBS;
-import static java.util.Arrays.asList;
+import java.util.Collections;
 
 import javax.annotation.Resource;
 
@@ -12,18 +11,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.msaas.infrastructure.ObserverRepository;
-import com.msaas.model.Observer;
+import com.msaas.infrastructure.UserRepository;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Resource
-    private ObserverRepository observerRepository;
+    private UserRepository userRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Observer obs = observerRepository.findByName(username);
-        return new User(obs.name, obs.password, asList(new SimpleGrantedAuthority("ROLE_" + ROLE_OBS)));
+        com.msaas.model.User user = userRepo.findByName(username);
+        return new User(username, user.getPassword(), Collections.singletonList(new SimpleGrantedAuthority(user.getRole().toString())));
     }
 }
