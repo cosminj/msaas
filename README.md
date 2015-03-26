@@ -18,7 +18,7 @@ Example of authenticating a client with oauth:
 
 GET a token:
 
-curl -X POST -vu mSaasWebClient:jhfads07ay7qwhcrq6787436ghrc8q3746fgx8347fgj97634gfx9j3467fg927 http://localhost:7777/oauth/token -H "Accept: application/json" -d "password=cosmin&username=Cosmin&grant_type=password&scope=read%20write&client_secret=jhfads07ay7qwhcrq6787436ghrc8q3746fgx8347fgj97634gfx9j3467fg927&client_id=mSaasWebClient"
+curl -X POST -vu mSaasWebClient:jhfads07ay7qwhcrq6787436ghrc8q3746fgx8347fgj97634gfx9j3467fg927 http://localhost:7777/oauth/token -H "Accept: application/json" -d "password=cosmin&username=THE_OBSERVER_USERNAME&grant_type=password&scope=read%20write&client_secret=jhfads07ay7qwhcrq6787436ghrc8q3746fgx8347fgj97634gfx9j3467fg927&client_id=mSaasWebClient"
 
 Then use the token to get the protected resource:
 
