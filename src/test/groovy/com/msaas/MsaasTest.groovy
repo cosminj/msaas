@@ -13,9 +13,4 @@ class MSaasTest extends AbstractIntegrationSpec {
         expect:
         1
     }
-
-    def "test default fixtures - should be at least 6 cameras in the db"() {
-        expect:
-        template.queryForObject('SELECT count(*) FROM camera', Integer) >= 6
-    }
 }
