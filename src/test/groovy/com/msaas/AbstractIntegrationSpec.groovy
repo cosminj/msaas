@@ -12,6 +12,6 @@ import spock.lang.Specification
 @IntegrationTest("server.port:0")
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
-@ContextConfiguration(loader = SpringApplicationContextLoader, classes = MSaas)
+@ContextConfiguration(loader = SpringApplicationContextLoader, classes = MSaasApp)
 abstract class AbstractIntegrationSpec extends Specification {
 }

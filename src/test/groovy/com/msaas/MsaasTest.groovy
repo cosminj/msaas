@@ -4,7 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 
 import javax.annotation.Resource
 
-class MSaasTest extends AbstractIntegrationSpec {
+class MSaasAppTest extends AbstractIntegrationSpec {
 
     @Resource
     private JdbcTemplate template

@@ -16,9 +16,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
-public class MSaas {
+public class MSaasApp {
 
     public static void main(String[] args) {
-        SpringApplication.run(MSaas.class, args);
+        SpringApplication.run(MSaasApp.class, args);
     }
 }
