@@ -44,7 +44,7 @@ class MainControllerIntegrationTest extends AbstractIntegrationSpec {
                     tags: '#some #tags',
                     startupDelay: 1))
         }
-        observer = userRepo.save(new User(name: 'some test observer', password: 'observers password'))
+        observer = userRepo.save(new User(name: 'some test observer', password: 'observers password', role: Role.OBSERVER))
     }
 
     def "should have a next screen"() {

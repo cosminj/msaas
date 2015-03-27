@@ -27,7 +27,9 @@ class UserRepositoryTest extends AbstractIntegrationSpec {
 
     def "should find an observer by name"() {
         expect:
-        userRepo.findByName('Darth Vader') == obs
+        def opt = userRepo.findByName('Darth Vader')
+        opt.isPresent()
+        opt.get() == obs
     }
 
     def "should create a new last screen"() {

@@ -28,13 +28,13 @@ public class MainController {
 
     @RequestMapping(PATH_USER_DETAILS)
     public com.msaas.model.User getMyDetails(@AuthenticationPrincipal User user) {
-        return userRepository.findByName(user.getUsername());
+        return userRepository.findByName(user.getUsername()).get();
     }
 
     @PreAuthorize("hasRole('OBSERVER')")
     @RequestMapping(PATH_SCROLL_SCREEN)
     @Transactional(value = REQUIRED)
     public Screen nextScreen(@AuthenticationPrincipal User user) {
-        return screenService.scrollNextScreen(userRepository.findByName(user.getUsername()));
+        return screenService.scrollNextScreen(userRepository.findByName(user.getUsername()).get());
     }
 }

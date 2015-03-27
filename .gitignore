@@ -24,3 +24,6 @@ pids
 
 # node-waf configuration
 .lock-wscript
+
+.sass-cache
+.tmp

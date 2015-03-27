@@ -1,5 +1,6 @@
 package com.msaas.rest;
 
+import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -23,7 +24,7 @@ public class CustomerController {
 
     @RequestMapping("/server/customerCameras")
     public Set<Camera> customerCameras(@AuthenticationPrincipal org.springframework.security.core.userdetails.User principal) {
-        User user = userRepository.findByName(principal.getUsername());
-        return cameraRepository.findByCustomer(user);
+        Optional<User> user = userRepository.findByName(principal.getUsername());
+        return cameraRepository.findByCustomer(user.get());
     }
 }

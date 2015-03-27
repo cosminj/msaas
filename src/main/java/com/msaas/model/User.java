@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -15,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "msaas_user")
@@ -24,11 +26,17 @@ public class User {
     @GeneratedValue(strategy = AUTO)
     private long id;
 
+    @NotNull
+    @Column
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @NotNull
+    @Column(unique = true)
     private String name;
 
+    @NotNull
+    @Column
     private String password;
 
     @OneToMany(mappedBy = "observer", fetch = LAZY)
@@ -52,6 +60,18 @@ public class User {
 
     public Role getRole() {
         return role;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Screen> getScreens() {
+        return screens;
     }
 
     @Override

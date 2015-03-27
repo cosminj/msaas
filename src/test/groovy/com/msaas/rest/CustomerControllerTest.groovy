@@ -26,7 +26,7 @@ class CustomerControllerTest extends Specification {
         when:
         def set = controller.customerCameras(cust)
         then:
-        1 * userRepo.findByName('some test cust') >> customer
+        1 * userRepo.findByName('some test cust') >> Optional.of(customer)
         1 * cameraRepo.findByCustomer(customer) >> set2
         set == set2
     }
