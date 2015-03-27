@@ -14,7 +14,7 @@ import javax.annotation.Resource
 
 import static com.msaas.model.CameraState.WAITING
 
-class MainControllerTest extends AbstractIntegrationSpec {
+class MainControllerIntegrationTest extends AbstractIntegrationSpec {
 
     @Resource
     private MainController mainController
@@ -57,5 +57,18 @@ class MainControllerTest extends AbstractIntegrationSpec {
         then:
         screen
         screen.cameras.size() == 4
+    }
+
+    def "should fetch the details of a customer" () {
+        given:
+        org.springframework.security.core.userdetails.User observer = Mock(org.springframework.security.core.userdetails.User)
+        observer.getUsername() >> 'some test observer'
+        def user
+        when:
+        user = mainController.getMyDetails(observer)
+        then:
+        user
+        user.name == 'some test observer'
+        user.password == 'observers password'
     }
 }

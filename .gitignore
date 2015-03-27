@@ -3,3 +3,24 @@
 *.iml
 .DS_Store
 build
+
+
+### Yeoman template
+node_modules/
+bower_components/
+
+
+### Node template
+# Logs
+logs
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
+.grunt
+
+# node-waf configuration
+.lock-wscript

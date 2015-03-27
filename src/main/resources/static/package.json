@@ -1,6 +1,8 @@
 {
   "name": "webclient",
   "version": "0.0.1-SNAPSHOT",
+  "description" : "Webclient for msaas server",
+  "repository" : "git@github.com:cosminj/msaas.git",
   "dependencies": {
     "grunt-connect-proxy": "^0.1.11"
   },
@@ -36,7 +38,7 @@
     "time-grunt": "^0.3.1"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.12.0"
   },
   "scripts": {
     "test": "grunt test"

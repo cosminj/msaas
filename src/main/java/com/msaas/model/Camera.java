@@ -7,8 +7,11 @@ import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.AUTO;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -63,7 +66,7 @@ public class Camera {
 
     @JsonBackReference()
     @ManyToMany(mappedBy = "cameras", fetch = LAZY, cascade = REMOVE)
-    private List<Screen> screens = new LinkedList<>();
+    private Set<Screen> screens = new HashSet<>();
 
     public Camera scheduleMe(Date at) {
         this.state = CameraState.SCHEDULED;
@@ -81,31 +84,15 @@ public class Camera {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Camera)) {
             return false;
         }
-
         Camera camera = (Camera) o;
-
-        return id == camera.id;
+        return Objects.equals(id, camera.id);
     }
 
     @Override
     public int hashCode() {
-        return (int) (id ^ (id >>> 32));
-    }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-            .add("id", id)
-            .add("name", name)
-            .add("state", state)
-            .add("customer", customer)
-            .add("tags", tags)
-            .add("nextViewingAt", nextViewingAt)
-            .add("startupDelay", startupDelay)
-            .add("url", url)
-            .toString();
+        return Objects.hash(id);
     }
 }

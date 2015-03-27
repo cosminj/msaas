@@ -7,8 +7,10 @@ import com.google.common.base.MoreObjects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static com.fasterxml.jackson.annotation.JsonFormat.Shape.STRING;
 import static javax.persistence.FetchType.EAGER;
@@ -47,7 +49,7 @@ public class Screen {
             inverseJoinColumns = {
                     @JoinColumn(name = "camera_id", referencedColumnName = "id")
             })
-    private List<Camera> cameras = new LinkedList<>();
+    private Set<Camera> cameras = new HashSet<>();
 
     @SuppressWarnings("unused")
     private Screen() {}
@@ -57,7 +59,7 @@ public class Screen {
         scheduledAt = new Date();
     }
 
-    public Screen(Date scheduledAt, Date viewedAt, User user, List<Camera> cameras) {
+    public Screen(Date scheduledAt, Date viewedAt, User user, Set<Camera> cameras) {
         this.scheduledAt = scheduledAt;
         this.viewedAt = viewedAt;
         this.observer = user;
@@ -73,7 +75,7 @@ public class Screen {
         return this;
     }
 
-    public List<Camera> getCameras() {
+    public Set<Camera> getCameras() {
         return cameras;
     }
 
@@ -92,16 +94,5 @@ public class Screen {
     @Override
     public int hashCode() {
         return java.util.Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-            .add("id", id)
-            .add("scheduledAt", scheduledAt)
-            .add("viewedAt", viewedAt)
-            .add("observer", observer)
-            .add("cameras", cameras)
-            .toString();
     }
 }
