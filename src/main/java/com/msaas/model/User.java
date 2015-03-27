@@ -37,7 +37,7 @@ public class User {
 
     public Screen getLastScreen() {
         Screen lastScreen;
-        if(screens.isEmpty()) {
+        if (screens.isEmpty()) {
             lastScreen = new Screen(this);
             screens.add(lastScreen);
         } else {

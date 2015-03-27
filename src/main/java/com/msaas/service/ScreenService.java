@@ -7,7 +7,7 @@ import static java.util.Date.from;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
@@ -50,7 +50,7 @@ public class ScreenService {
     public Screen computeNextScreen(User user) {
 
         // find next top 4 newCameras in state WAITING (sorted by nextViewingAt)
-        List<Camera> newCameras = cameraRepository.findTop4ByState(WAITING, new Sort(ASC, "nextViewingAt"));
+        Set<Camera> newCameras = cameraRepository.findTop4ByState(WAITING, new Sort(ASC, "nextViewingAt"));
 
         // insert new screen 60 seconds from now
         Date scheduledAt = from(now().plusSeconds(60).atZone(systemDefault()).toInstant());
