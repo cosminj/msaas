@@ -1,6 +1,7 @@
 
 [![Build Status](https://travis-ci.org/cosminj/msaas.svg?branch=master)](https://travis-ci.org/cosminj/msaas)
 [![Coverage Status](https://img.shields.io/coveralls/cosminj/msaas.svg?branch=master)](https://coveralls.io/r/cosminj/msaas?branch=master)
+[![Coverity quality](https://scan.coverity.com/projects/4695/badge.svg)](https://scan.coverity.com/projects/4695)
 [![Dependency Status](https://www.versioneye.com/user/projects/551902586974b846dc000053/badge.svg?style=flat)](https://www.versioneye.com/user/projects/551902586974b846dc000053)
 [![Heroku deployed](https://heroku-badge.herokuapp.com/?app=msaas-server)](https://msaas-server.herokuapp.com)
 
