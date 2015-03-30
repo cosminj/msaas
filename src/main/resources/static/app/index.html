@@ -24,16 +24,16 @@
 
 
 
-    <div class="container">
+    <div class="container" ng-controller="MainCtrl as main">
       <div class="header">
         <ul class="nav nav-pills pull-right">
           <li class="active"><a ng-href="#/">Home</a></li>
           <li><a ng-href="#/about">About</a></li>
           <li><a ng-href="#/login">Login</a></li>
-          <li><a ng-href="#/video">Video</a></li>
+          <li><a ng-href="#/video" ng-show="main.showVideo()">Video</a></li>
           <li><a ng-href="#">Contact</a></li>
         </ul>
-        <h3 class="text-muted">webclient</h3>
+        <h3 class="text-muted">MSaas</h3>
       </div>
 
       <div ng-view=""></div>
