@@ -3,7 +3,7 @@
 describe('Controller: AboutCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('webclientApp'));
+  beforeEach(module('app'));
 
   var AboutCtrl,
     scope;

@@ -22,7 +22,6 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 import com.msaas.model.Role;
-import com.msaas.rest.MainController;
 
 @Configuration
 public class OauthConfiguration {
@@ -43,7 +42,7 @@ public class OauthConfiguration {
             http
                 .authorizeRequests()
                 .antMatchers(PATH_SCROLL_SCREEN).hasAnyRole(Role.OBSERVER.toString(), Role.ADMIN.toString())
-                .antMatchers(PATH_USER_DETAILS).hasAnyRole(Role.CUSTOMER.toString(), Role.ADMIN.toString());
+                .antMatchers(PATH_USER_DETAILS).hasAnyRole(Role.CUSTOMER.toString(), Role.ADMIN.toString(), Role.OBSERVER.toString());
         }
     }
 

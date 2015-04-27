@@ -22,8 +22,11 @@ public class CustomerController {
     @Resource
     private CameraRepository cameraRepository;
 
-    @RequestMapping("/server/customerCameras")
+    @RequestMapping("/server/customer/cameras")
     public Set<Camera> customerCameras(@AuthenticationPrincipal org.springframework.security.core.userdetails.User principal) {
+        if(principal == null || principal.getUsername() == null) {
+            return null;
+        }
         Optional<User> user = userRepository.findByName(principal.getUsername());
         return cameraRepository.findByCustomer(user.get());
     }
